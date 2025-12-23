@@ -1,2 +1,2 @@
-# api-sgp
-Api Rest de um projeto de um Sistema De Gestão De Projetos.
+# Sistema de gerenciamento de projetos
+Sistema de gerenciamento de projetos em Api Rest
