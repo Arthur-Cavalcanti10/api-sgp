@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.sgp.api.exception.UsuarioNaoEncontradoEmailException;
 import br.com.sgp.api.exception.UsuarioNaoEncontradoException;
 import br.com.sgp.api.model.Usuario;
 import br.com.sgp.api.service.UsuarioService;
@@ -50,7 +51,7 @@ public class UsuarioController {
   public ResponseEntity<UsuarioDTO> consultarUsuarioPeloCPF(@RequestParam String cpf){ //o request param dis que o valor do cpf sera injetado do url
        UsuarioDTO usuarioExistente =usuarioService.buscarUsuarioPeloCpf(cpf);
       if(Objects.isNull(usuarioExistente)){
-      return ResponseEntity.notFound().build(); 
+      throw new UsuarioNaoEncontradoException(cpf); 
     }
     
     return ResponseEntity.ok().body(usuarioExistente);//o get serve para pegar o valor dentro do optional e mostrar no corpo
@@ -61,7 +62,7 @@ public class UsuarioController {
   public ResponseEntity<UsuarioDTO> consultarUsuarioPeloEmail(@RequestParam String email){
        UsuarioDTO usuarioExistente =usuarioService.buscarUsuarioPeloEmail(email);
       if(Objects.isNull(usuarioExistente)){
-      return ResponseEntity.notFound().build(); 
+      throw new UsuarioNaoEncontradoEmailException(email); 
     }
     
     return ResponseEntity.ok().body(usuarioExistente);
