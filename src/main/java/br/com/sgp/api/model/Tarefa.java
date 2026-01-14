@@ -30,7 +30,7 @@ public class Tarefa {
 @Column(nullable = false)
 private Long id;
 
-@NotBlank
+@NotBlank(message = "o campo 'titulo' é obrigatório")
 @Column(nullable = false)
 private String titulo;
 
@@ -60,5 +60,5 @@ private PrioridadeTarefa prioridade;
 private Projeto projeto;
 
 @ManyToOne
-public Usuario usuario;
+private Usuario usuario;
 }

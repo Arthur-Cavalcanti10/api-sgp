@@ -1,8 +1,10 @@
 package br.com.sgp.api.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import br.com.sgp.api.enums.UsuarioStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -55,6 +58,10 @@ public class Usuario {
   @Enumerated(value = EnumType.STRING) //os valores da lista enum sao string 
   private UsuarioStatus status;
 
- 
+ @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tarefa> tarefas;
+
+    @OneToMany(mappedBy = "responsavel", cascade = CascadeType.ALL)
+    private List<Projeto> projetos;
 
 }

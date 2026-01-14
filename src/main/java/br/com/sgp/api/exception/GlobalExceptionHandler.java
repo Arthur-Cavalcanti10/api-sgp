@@ -14,7 +14,7 @@ public class GlobalExceptionHandler{
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex,
+            MethodArgumentNotValidException ex, //atribui os erros a uma variavel
             WebRequest request) {
 
         List<String> erros = ex.getBindingResult()
@@ -27,11 +27,19 @@ public class GlobalExceptionHandler{
 
         return ResponseEntity.badRequest().body(mensagemErroApi);
     }
+
  @ExceptionHandler(UsuarioNaoEncontradoException.class)
-    public ResponseEntity<MensagemErroApi> handleUsuarioNaoEncontradoException(
+    public ResponseEntity<MensagemErroApi> handleUsuarioNaoEncontradoException( //formatação de como vai sair o erro do usuario nao encontrado
       UsuarioNaoEncontradoException ex, WebRequest request) {
         MensagemErroApi msgErroApi = new MensagemErroApi(HttpStatus.NOT_FOUND, ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msgErroApi);
       }
+
+  @ExceptionHandler(ProjetoNaoEncontradoException.class)
+   public ResponseEntity<MensagemErroApi> handleProjetoNaoEncontradoException(ProjetoNaoEncontradoException ex, WebRequest request){
+    MensagemErroApi msgErroApi = new MensagemErroApi(HttpStatus.NOT_FOUND, ex.getMessage());
+
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msgErroApi);
+   }
 }

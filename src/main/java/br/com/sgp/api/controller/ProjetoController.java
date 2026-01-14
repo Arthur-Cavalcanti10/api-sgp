@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sgp.api.enums.ProjetoStatus;
+import br.com.sgp.api.exception.ProjetoNaoEncontradoException;
 import br.com.sgp.api.model.Projeto;
 import br.com.sgp.api.service.ProjetoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/projetos")
@@ -46,13 +48,13 @@ public class ProjetoController {
     public ResponseEntity<Optional<Projeto>> buscarProjetoPeloId(@PathVariable Long id) {
         Optional<Projeto> projetoExsite = projetoService.consultarProjetoPeloId(id);
         if (projetoExsite.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new ProjetoNaoEncontradoException(id);
         }
         return ResponseEntity.ok().body(projetoService.consultarProjetoPeloId(id));
     }
 
     @PostMapping(value = "/cadastrar")
-    public ResponseEntity<Projeto> adicionarProjeto(@RequestBody Projeto projeto) {
+    public ResponseEntity<Projeto> adicionarProjeto(@Valid @RequestBody Projeto projeto) {
         return ResponseEntity.ok().body(projetoService.salvarProjeto(projeto));
     }
 
@@ -60,7 +62,7 @@ public class ProjetoController {
     public ResponseEntity<Void> removerProjeto(@PathVariable Long id) {
         Optional<Projeto> projetoExiste = projetoService.consultarProjetoPeloId(id);
         if (projetoExiste.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new ProjetoNaoEncontradoException(id);
         }
         return ResponseEntity.noContent().build();
     }
@@ -69,7 +71,7 @@ public class ProjetoController {
       public ResponseEntity<Projeto> atualizarProjeto(@PathVariable Long id, @RequestBody Projeto projeto){
       Optional<Projeto> projetoExiste=projetoService.consultarProjetoPeloId(id);
       if(projetoExiste.isEmpty()){
-        return ResponseEntity.notFound().build();
+        throw new ProjetoNaoEncontradoException(id);
       }
       projeto.setId(id);
 

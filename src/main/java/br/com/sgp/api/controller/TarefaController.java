@@ -17,6 +17,7 @@ import br.com.sgp.api.enums.PrioridadeTarefa;
 import br.com.sgp.api.enums.TarefaStatus;
 import br.com.sgp.api.model.Tarefa;
 import br.com.sgp.api.service.TarefaService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/tarefas")
@@ -50,7 +51,7 @@ public ResponseEntity<List<Tarefa>> buscarPelaPrioridade(@RequestParam Prioridad
 
 //ADICIONAR TAREFA
 @PostMapping(value = "/cadastrar")
-public ResponseEntity<Tarefa> adicionarTarefa(@RequestBody Tarefa tarefa){
+public ResponseEntity<Tarefa> adicionarTarefa(@Valid @RequestBody Tarefa tarefa){
 return ResponseEntity.status(HttpStatus.CREATED).body(tarefaService.salvarTarefa(tarefa));
 }
 
