@@ -46,11 +46,11 @@ public class ProjetoController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Optional<Projeto>> buscarProjetoPeloId(@PathVariable Long id) {
-        Optional<Projeto> projetoExsite = projetoService.consultarProjetoPeloId(id);
-        if (projetoExsite.isEmpty()) {
+        Optional<Projeto> projetoExiste = projetoService.consultarProjetoPeloId(id);
+        if (projetoExiste.isEmpty()) {
             throw new ProjetoNaoEncontradoException(id);
         }
-        return ResponseEntity.ok().body(projetoService.consultarProjetoPeloId(id));
+        return ResponseEntity.ok().body(projetoExiste);
     }
 
     @PostMapping(value = "/cadastrar")
@@ -64,6 +64,7 @@ public class ProjetoController {
         if (projetoExiste.isEmpty()) {
             throw new ProjetoNaoEncontradoException(id);
         }
+        projetoService.deletarProjeto(id);
         return ResponseEntity.noContent().build();
     }
 
