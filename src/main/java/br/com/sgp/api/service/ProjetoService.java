@@ -21,7 +21,7 @@ public class ProjetoService {
   }
   //delete 
   public void deletarProjeto(Long id){
-    projetoRepository.deleteById(id);;
+    projetoRepository.deleteById(id);
   }
   //consultar
   public List<Projeto> consultarProjetos(){
@@ -32,7 +32,7 @@ public class ProjetoService {
     return projetoRepository.findByStatus(status);
   }
   
-   public Optional<Projeto> consultarProjetoPeloDataConclusao(LocalDate dataConclusao){
+   public List<Projeto> consultarProjetoPeloDataConclusao(LocalDate dataConclusao){
     return projetoRepository.findByDataConclusao(dataConclusao);
   }
    

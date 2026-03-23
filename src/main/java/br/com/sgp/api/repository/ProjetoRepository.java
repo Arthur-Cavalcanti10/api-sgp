@@ -13,6 +13,6 @@ import br.com.sgp.api.model.Projeto;
 @Repository
 public interface ProjetoRepository extends JpaRepository<Projeto, Long> {
   List<Projeto> findByStatus(ProjetoStatus status);
-  Optional<Projeto> findByDataConclusao (LocalDate dataConclusao);
+  List<Projeto> findByDataConclusao(LocalDate dataConclusao);
   Optional<Projeto> findByDataInicio (LocalDate dataInicio);
 }

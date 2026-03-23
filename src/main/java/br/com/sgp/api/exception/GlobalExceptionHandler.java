@@ -38,8 +38,14 @@ public class GlobalExceptionHandler{
 
   @ExceptionHandler(ProjetoNaoEncontradoException.class)
    public ResponseEntity<MensagemErroApi> handleProjetoNaoEncontradoException(ProjetoNaoEncontradoException ex, WebRequest request){
-    MensagemErroApi msgErroApi = new MensagemErroApi(HttpStatus.NOT_FOUND, ex.getMessage());
+     MensagemErroApi msgErroApi = new MensagemErroApi(HttpStatus.NOT_FOUND, ex.getMessage());
 
+     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msgErroApi);
+    }
+
+  @ExceptionHandler(TarefaNaoEncontradaException.class)
+  public ResponseEntity<MensagemErroApi> handleTarefaNaoEncontradaException(TarefaNaoEncontradaException ex, WebRequest request){
+    MensagemErroApi msgErroApi = new MensagemErroApi(HttpStatus.NOT_FOUND, ex.getMessage());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msgErroApi);
-   }
+  }
 }

@@ -39,7 +39,7 @@ public class UsuarioController {
       throw new UsuarioNaoEncontradoException(id);
     }  
 
-    return ResponseEntity.ok().body(usuarioService.consultarUsuarioPeloId(id));
+    return ResponseEntity.ok().body(usuarioDTO);
   }
   
   @GetMapping //mostrando que isso e um get||pegar todos os usuarios 

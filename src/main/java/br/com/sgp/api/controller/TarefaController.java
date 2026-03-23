@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.sgp.api.enums.PrioridadeTarefa;
 import br.com.sgp.api.enums.TarefaStatus;
+import br.com.sgp.api.exception.TarefaNaoEncontradaException;
 import br.com.sgp.api.model.Tarefa;
 import br.com.sgp.api.service.TarefaService;
 import jakarta.validation.Valid;
@@ -39,9 +40,9 @@ public ResponseEntity<List<Tarefa>> buscarTarefaPeloStatus(@RequestParam TarefaS
 public ResponseEntity<Optional<Tarefa>> buscarTarefaPeloId(@PathVariable Long id){
   Optional<Tarefa> tarefaExiste = tarefaService.consultarTarefasPeloId(id);
   if(tarefaExiste.isEmpty()){
-    return ResponseEntity.notFound().build();
+    throw new TarefaNaoEncontradaException(id);
   }
-  return ResponseEntity.ok().body(tarefaService.consultarTarefasPeloId(id));
+  return ResponseEntity.ok().body(tarefaExiste);
 }
 //por prioridade
 @GetMapping("/busca/prioridade")
@@ -60,7 +61,7 @@ return ResponseEntity.status(HttpStatus.CREATED).body(tarefaService.salvarTarefa
 public ResponseEntity<Void> removerTarefa(@PathVariable Long id){
   Optional<Tarefa> tarefaExiste = tarefaService.consultarTarefasPeloId(id);
   if (tarefaExiste.isEmpty()){
-    return ResponseEntity.notFound().build();
+    throw new TarefaNaoEncontradaException(id);
   }
   tarefaService.deletarTarefa(id);
   return ResponseEntity.noContent().build();
@@ -71,7 +72,7 @@ public ResponseEntity<Void> removerTarefa(@PathVariable Long id){
 public ResponseEntity<Tarefa> atualizarTarefa(@RequestBody Tarefa tarefa, @PathVariable Long id){
   Optional<Tarefa> tarefaExiste = tarefaService.consultarTarefasPeloId(id);
   if(tarefaExiste.isEmpty()){
-    return ResponseEntity.notFound().build();
+    throw new TarefaNaoEncontradaException(id);
   }
   tarefa.setId(id);
   return ResponseEntity.ok().body(tarefaService.salvarTarefa(tarefa));
