@@ -40,7 +40,7 @@ public class ProjetoController {
     }
 
     @GetMapping(value = "/busca/dataconclusao")
-    public ResponseEntity<Optional<Projeto>> listarProjetosPelaDataDeConclusao(@RequestParam LocalDate dataConclusao) {
+    public ResponseEntity<List<Projeto>> listarProjetosPelaDataDeConclusao(@RequestParam LocalDate dataConclusao) {
         return ResponseEntity.ok().body(projetoService.consultarProjetoPeloDataConclusao(dataConclusao));
     }
 
