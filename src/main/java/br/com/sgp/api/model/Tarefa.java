@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import br.com.sgp.api.enums.PrioridadeTarefa;
 import br.com.sgp.api.enums.TarefaStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -55,10 +56,12 @@ private TarefaStatus status;
 @Enumerated(value = EnumType.STRING)
 private PrioridadeTarefa prioridade;
 
+@JsonIgnoreProperties({"tarefas", "responsavel"})
 @ManyToOne //varias tarefas podem ser atribuidas para um projeto
 @JoinColumn(nullable = false) //como é uma relação nao usamos o column, mas sim o JoinColumn
 private Projeto projeto;
 
+@JsonIgnoreProperties({"tarefas", "projetos"})
 @ManyToOne
 private Usuario usuario;
 }

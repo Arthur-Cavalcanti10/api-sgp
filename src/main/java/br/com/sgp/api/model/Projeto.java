@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import br.com.sgp.api.enums.ProjetoStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,11 +53,13 @@ private LocalDate dataConclusao;
 @Enumerated(value = EnumType.STRING)
 private ProjetoStatus status;
 
+@JsonIgnoreProperties({"projetos", "tarefas"})
 @ManyToOne //varios projetos para um usuario || aqui ele mapeia qual a chave principal de usuario
 @JoinColumn(nullable = false) //como é uma relação nao usamos o column, mas sim o JoinColumn
 private Usuario responsavel; 
 
- @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL, orphanRemoval = true)
+@JsonIgnoreProperties({"projeto", "usuario"})
+@OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tarefa> tarefas;
 
 }

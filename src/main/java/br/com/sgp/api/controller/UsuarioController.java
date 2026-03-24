@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,7 @@ import jakarta.validation.Valid;
 //endpoint para consultar 
 @RestController//aqui vamos criar os endpoints para fazer o crud
 @RequestMapping(value = "/usuarios") //http://8080/usuario... || aqui estamos mostrando que o url que todos esses metodos serão usados e o /usuarios
-
+@CrossOrigin(origins = "http://localhost:5173")
 public class UsuarioController {
   @Autowired //isso serve para que o usuarioService herde os metodos do UsuarioService, se não ele conta como null
   private UsuarioService usuarioService;
